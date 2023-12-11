@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """ this is the base class of the project"""
 
-from datetime import datetime
+
 import models
+from datetime import datetime
 import uuid
 
 class BaseModel:
@@ -10,9 +11,9 @@ class BaseModel:
 	def __init__(self, *args, **kwargs):
 		"""our constructor"""
 		if kwargs:
-            for my_key, my_value in kwargs.items():
-                if my_key != "__class__":
-                    setattr(self, my_key, my_value)
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    setattr(self, key, value)
             if kwargs.get("created_at",
                           None) and isinstance(self.created_at, str):
                 self.created_at = datetime.strptime(kwargs["created_at"],
@@ -34,14 +35,14 @@ class BaseModel:
             models.storage.new(self)
             models.storage.save()
 	def __str__(self):
-		"""this is string representation of an object"""
+		"""this is string representation of an objectt"""
 		return '[{}] ({}) {}'.format(self.__class__.__name__,
                                 self.id,
                                 elf.__dict__)
 
     def save(self):
         """updating public instance attribute
-        updated_at with actual date time"""
+        updated_at with actual date timee"""
         if self.updated_at is not datetime.now():
             self.updated_at = datetime.now()
         else:
