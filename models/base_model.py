@@ -1,65 +1,46 @@
 #!/usr/bin/python3
-""" this is the base class of the project"""
-
-
+"""our foundation project"""
 import models
+from uuid import uuid4
 from datetime import datetime
-import uuid
+
 
 class BaseModel:
-	""" the base class """
-	def __init__(self, *args, **kwargs):
-		"""our constructor"""
-		if kwargs:
-            for key, value in kwargs.items():
-                if key != "__class__":
-                    setattr(self, key, value)
-            if kwargs.get("created_at",
-                          None) and isinstance(self.created_at, str):
-                self.created_at = datetime.strptime(kwargs["created_at"],
-                                                    '%Y-%m-%dT%H:%M:%S.%f')
-            else:
-                self.created_at = datetime.utcnow()
-            if kwargs.get("updated_at",
-                          None) and isinstance(self.updated_at, str):
-                self.updated_at = datetime.strptime(kwargs["updated_at"],
-                                                    '%Y-%m-%dT%H:%M:%S.%f')
-            else:
-                self.updated_at = datetime.utcnow()
-            if kwargs["id"] is None:
-                self.id = str(uuid.uuid4())
+    """base classe ."""
+
+    def __init__(self, *args, **kwargs):
+        """ our constructor
+        """
+        regul_form = "%Y-%m-%dT%H:%M:%S.%f"
+        self.id = str(uuid4())
+        self.created_at = datetime.today()
+        self.updated_at = datetime.today()
+        if len(kwargs) != 0:
+            for w, u in kwargs.items():
+                if w == "created_at" or w == "updated_at":
+                    self.__dict__[w] = datetime.strptime(u, regul_form)
+                else:
+                    self.__dict__[w] = u
         else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.utcnow()
-            self.updated_at = self.created_at
             models.storage.new(self)
-            models.storage.save()
-	def __str__(self):
-		"""this is string representation of an objectt"""
-		return '[{}] ({}) {}'.format(self.__class__.__name__,
-                                self.id,
-                                elf.__dict__)
 
     def save(self):
-        """updating public instance attribute
-        updated_at with actual date timee"""
-        if self.updated_at is not datetime.now():
-            self.updated_at = datetime.now()
-        else:
-            models.storage.new(self.to_dict())
+        """Update with the current datetime now"""
+        self.updated_at = datetime.today()
         models.storage.save()
 
     def to_dict(self):
-        """returns dict with all keys/values
-        of __dict__ of instancec"""
-        mon_dictionaire = {
-            "__class__": self.__class__.__name__
-        }
+        """Retourne the dictionary of the BaseModel instancee
+        also representing
+        the class name of the object
+        """
+        redictt = self.__dict__.copy()
+        redictt["created_at"] = self.created_at.isoformat()
+        redictt["updated_at"] = self.updated_at.isoformat()
+        redictt["__class__"] = self.__class__.__name__
+        return redictt
 
-        mon_dictionaire.update(self.__dict__)
-
-        if "created_at" in mon_dictionaire:
-            mon_dictionaire["created_at"] = self.created_at.isoformat()
-        if "updated_at" in mon_dictionaire:
-            mon_dictionaire["updated_at"] = self.updated_at.isoformat()
-        return mon_dictionaire
+    def __str__(self):
+        """print str and rep representation of the BaseModel instance."""
+        myClassname = self.__class__.__name__
+        return "[{}] ({}) {}".format(myClassname, self.id, self.__dict__)
