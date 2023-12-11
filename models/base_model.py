@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """ this is the base class of the project"""
 
-from datetime import datetime
+
 import models
+from datetime import datetime
 import uuid
 
 class BaseModel:
