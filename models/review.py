@@ -1,11 +1,17 @@
 #!/usr/bin/python3
-"""Review class inheriting from BaseModel mum
-"""
+"""defines deview class."""
 from models.base_model import BaseModel
 
 
 class Review(BaseModel):
-    """class Review"""
-    place_id = ""
+    """represent revie.
+
+    Attributes:
+        place_id (str): the Place id.
+        user_id (str): the User id.
+        text (str): the text of the review.
+    """
+
     user_id = ""
+    place_id = ""
     text = ""
