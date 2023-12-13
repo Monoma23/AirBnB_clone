@@ -1,51 +1,51 @@
 #!/usr/bin/python3
-"""Defines BaseModel class."""
+"""Defines BaseModel class hihi"""
 import models
 from uuid import uuid4
 from datetime import datetime
 
 
 class BaseModel:
-    """Represents BaseModel of the HBnB project."""
+    """Representss BaseModel of the HBnB project good"""
 
     def __init__(self, *args, **kwargs):
-        """Initialize new BaseModel.
+        """Initializezz new BaseModell.
 
-        Args:
-            *args (any): Unused.
-            **kwargs (dict): Key/value pairs attributes.
+        Argss:
+            *args (any): Unused
+            **kwargs (dict): Key/value pairs attribute
         """
-        yearForm = "%Y-%m-%dT%H:%M:%S.%f"
+        My_ytform = "%Y-%m-%dT%H:%M:%S.%f"
         self.id = (str(uuid4()))
         self.created_at = datetime.today()
         self.updated_at = datetime.today()
         if len(kwargs) != 0:
-            for w, v in kwargs.items():
-                if w == "created_at" or w == "updated_at":
-                    self.__dict__[w] = datetime.strptime(v, yearForm)
+            for z, r in kwargs.items():
+                if z == "created_at" or z == "updated_at":
+                    self.__dict__[z] = datetime.strptime(r, My_ytform)
                 else:
-                    self.__dict__[w] = v
+                    self.__dict__[z] = r
         else:
             models.storage.new(self)
 
     def save(self):
-        """Update updated_at with current datetime."""
+        """Updateeze updated_at with currentt datetime"""
         self.updated_at = datetime.today()
         models.storage.save()
 
     def to_dict(self):
-        """Return the dictionary of BaseModel instance.
+        """Returnbb the dictionaryy of BaseModelll instance
 
-        Includes the key/value pair __class__ representing
-        the class name the object.
+        Includess the key/value pair __class__ representinnng
+        the class name the objecttt
         """
-        repDict = self.__dict__.copy()
-        repDict["created_at"] = self.created_at.isoformat()
-        repDict["updated_at"] = self.updated_at.isoformat()
-        repDict["__class__"] = self.__class__.__name__
-        return repDict
+        My_rdict = self.__dict__.copy()
+        My_rdict["created_at"] = self.created_at.isoformat()
+        My_rdict["updated_at"] = self.updated_at.isoformat()
+        My_rdict["__class__"] = self.__class__.__name__
+        return My_rdict
 
     def __str__(self):
-        """Return the print/str representation of BaseModel instance."""
-        myClname = self.__class__.__name__
-        return "[{}] ({}) {}".format(myClname, self.id, self.__dict__)
+        """Returnnn the print/str representation of BaseModel instancce"""
+        My_clname = self.__class__.__name__
+        return "[{}] ({}) {}".format(My_clname, self.id, self.__dict__)

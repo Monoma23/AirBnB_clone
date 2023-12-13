@@ -1,17 +1,17 @@
 #!/usr/bin/python3
-"""defines deview class."""
+"""definess deview classs"""
 from models.base_model import BaseModel
 
 
 class Review(BaseModel):
-    """represent revie.
+    """represent reve
 
     Attributes:
-        place_id (str): the Place id.
-        user_id (str): the User id.
-        text (str): the text of the review.
+        place_id (str): the Place id
+        user_id (str): the User id
+        text (str): the text of the revie
     """
 
-    user_id = ""
     place_id = ""
+    user_id = ""
     text = ""
